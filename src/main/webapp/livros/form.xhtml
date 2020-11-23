@@ -3,33 +3,47 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-<h:form>
+<h:form prependId="false">
 	<div>
 		<h:outputLabel value="Título" />
-		<h:inputText value="#{adminLivroBean.livro.titulo}" />
+		<h:inputText id="Titulo" value="#{adminLivroBean.livro.titulo}" />
+		<h:message for="Titulo" />
 	</div>
 	<div>
 		<h:outputLabel value="Descrição" />
-		<h:inputText row="4" col="20"
+		<h:inputTextarea id="Descricao" row="4" col="20"
 			value="#{adminLivroBean.livro.descricao}" />
+		<h:message for="Descricao" />
 	</div>
 	<div>
 		<h:outputLabel value="Número de páginas" />
-		<h:inputText value="#{adminLivroBean.livro.numeroPaginas}" />
+		<h:inputText id="numeroDePaginas" value="#{adminLivroBean.livro.numeroPaginas}" />
+		<h:message for="numeroDePaginas" />
 	</div>
 	<div>
 		<h:outputLabel value="Autores" />
-		<h:selectManyListbox value="#{adminLivroBean.autoresId}" converter="javax.faces.Integer">
+		<h:selectManyListbox id="autores" value="#{adminLivroBean.autores}">
 			<f:selectItems value="#{adminLivroBean.autores}" var="autor"
 				itemValue="#{autor.id}" itemLabel="#{autor.nome}" />
 		</h:selectManyListbox>
+		<h:message for="autores"/>
 
 	</div>
 	<div>
 		<h:outputLabel value="Preço" />
-		<h:inputText value="#{adminLivroBean.livro.preco}" />
+		<h:inputText id="Preco" value="#{adminLivroBean.livro.preco}" />
+		<h:message for="Preco" />
+	</div>
+	
+	<div>
+		<h:outputLabel value="Data" />
+		<h:inputText id="data" value="#{adminLivroBean.livro.dataLancamento}" pt:type="date">
+			<f:convertDateTime pattern="yyyy-MM-dd"/>
+		</h:inputText>
+		<h:message for="data" />
 	</div>
 	<h:commandButton action="#{adminLivroBean.salvar}" value="cadastrar" />
 </h:form>
