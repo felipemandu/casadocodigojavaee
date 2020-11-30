@@ -1,36 +1,67 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<h:outputStylesheet library="css" name="style-admin.css" />
+</h:head>
 
-<h:messages />
-<h:dataTable var="livro" value="#{adminListaLivroBean.livros}">
-	<h:column>
-		<f:facet name="header">Título</f:facet>
+<h:body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"> <a class="navbar-brand" href="#">Casa do código</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+		aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarNav">
+		<ul class="navbar-nav">
+			<li class="nav-item active"><a class="nav-link" href="#">Lista<span class="sr-only">(current)</span></a></li>
+			<li class="nav-item"><h:link styleClass="nav-link" value="Cadastro" outcome="form" /></li>
+		</ul>
+	</div>
+	</nav>
+	<div class="container">
+	<h1>Lista de Livros</h1>
+		<h:messages />
+		<h:dataTable var="livro" value="#{adminListaLivroBean.livros}" class="table table-bordered table-striped">
+			<h:column>
+				<f:facet name="header">Título</f:facet>
             #{livro.titulo}
         </h:column>
-	<h:column>
-		<f:facet name="header">Descrição</f:facet>
+			<h:column>
+				<f:facet name="header">Descrição</f:facet>
             #{livro.descricao}
         </h:column>
-	<h:column>
-		<f:facet name="header">Páginas</f:facet>
+			<h:column>
+				<f:facet name="header">Páginas</f:facet>
             #{livro.numeroPaginas}
         </h:column>
-	<h:column>
-		<f:facet name="header">Preço</f:facet>
+			<h:column>
+				<f:facet name="header">Preço</f:facet>
             #{livro.preco}
         </h:column>
-	<h:column>
-		<f:facet name="header">Autores</f:facet>
-		<ui:repeat value="#{livro.autores}" var="autor">
+			<h:column>
+				<f:facet name="header">Autores</f:facet>
+				<ui:repeat value="#{livro.autores}" var="autor">
                 #{autor.nome},
             </ui:repeat>
-	</h:column>
-</h:dataTable>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Data de Lançamento</f:facet>
+				<h:outputText id="data" value="#{livro.dataLancamento.time}">
+					<f:convertDateTime for="data" pattern="dd/MM/yyyy" />
+				</h:outputText>
 
+			</h:column>
+			<h:column>
+				<f:facet name="header">Capa Do Livro</f:facet>
+				<h:graphicImage value="#{livro.path}" alt="#{livro.titulo}" />
+
+			</h:column>
+		</h:dataTable>
+	</div>
+</h:body>
 </html>

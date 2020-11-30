@@ -1,50 +1,74 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-<h:form prependId="false">
-	<div>
-		<h:outputLabel value="Título" />
-		<h:inputText id="Titulo" value="#{adminLivroBean.livro.titulo}" />
-		<h:message for="Titulo" />
-	</div>
-	<div>
-		<h:outputLabel value="Descrição" />
-		<h:inputTextarea id="Descricao" row="4" col="20"
-			value="#{adminLivroBean.livro.descricao}" />
-		<h:message for="Descricao" />
-	</div>
-	<div>
-		<h:outputLabel value="Número de páginas" />
-		<h:inputText id="numeroDePaginas" value="#{adminLivroBean.livro.numeroPaginas}" />
-		<h:message for="numeroDePaginas" />
-	</div>
-	<div>
-		<h:outputLabel value="Autores" />
-		<h:selectManyListbox id="autores" value="#{adminLivroBean.autores}">
-			<f:selectItems value="#{adminLivroBean.autores}" var="autor"
-				itemValue="#{autor.id}" itemLabel="#{autor.nome}" />
-		</h:selectManyListbox>
-		<h:message for="autores"/>
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<h:outputStylesheet library="css" name="style-admin.css" />
+</h:head>
 
+<h:body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark"> <a class="navbar-brand" href="#">Casa do código</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+		aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarNav">
+		<ul class="navbar-nav">
+			<li class="nav-item "><h:link styleClass="nav-link" value="Lista" outcome="lista" /></li>
+			<li class="nav-item active"><a class="nav-link" href="#">Cadastro<span class="sr-only">(current)</span></a></li>
+		</ul>
 	</div>
-	<div>
-		<h:outputLabel value="Preço" />
-		<h:inputText id="Preco" value="#{adminLivroBean.livro.preco}" />
-		<h:message for="Preco" />
+	</nav>
+	<div class="container">
+	<h1>Cadastro De Livros</h1>
+		<h:form prependId="false" enctype="multipart/form-data">
+			<div class="form-group">
+				<h:outputLabel value="Título" />
+				<h:inputText id="Titulo" value="#{adminLivroBean.livro.titulo}" styleClass="form-control" />
+				<h:message for="Titulo" />
+			</div>
+
+			<div class="form-group">
+				<h:outputLabel value="Descrição" />
+				<h:inputTextarea id="Descricao" row="4" col="20" value="#{adminLivroBean.livro.descricao}" styleClass="form-control" />
+				<h:message for="Descricao" />
+			</div>
+			<div class="form-group">
+				<h:outputLabel value="Número de páginas" />
+				<h:inputText id="numeroDePaginas" value="#{adminLivroBean.livro.numeroPaginas}" styleClass="form-control" />
+				<h:message for="numeroDePaginas" />
+			</div>
+			<div class="form-group">
+				<h:outputLabel value="Autores" />
+				<h:selectManyListbox id="autores" value="#{adminLivroBean.livro.autores}" converter="autorConverter"
+					styleClass="form-control">
+					<f:selectItems value="#{adminLivroBean.autores}" var="autor" itemValue="#{autor}" itemLabel="#{autor.nome}" />
+				</h:selectManyListbox>
+				<h:message for="autores" />
+
+			</div>
+			<div class="form-group">
+				<h:outputLabel value="Preço" />
+				<h:inputText id="Preco" value="#{adminLivroBean.livro.preco}" styleClass="form-control" />
+				<h:message for="Preco" />
+			</div>
+
+			<div class="form-group">
+				<h:outputLabel value="Data" />
+				<h:inputText id="data" value="#{adminLivroBean.livro.dataLancamento}" pt:type="date" styleClass="form-control" />
+				<h:message for="data" />
+			</div>
+			<div class="form-group">
+				<h:outputLabel value="Capa" />
+				<h:inputFile id="capa" value="#{adminLivroBean.capaLivro}" styleClass="form-control" />
+				<h:message for="capa" />
+			</div>
+			<h:commandButton action="#{adminLivroBean.salvar}" value="cadastrar" styleClass="btn btn-primary" />
+		</h:form>
 	</div>
-	
-	<div>
-		<h:outputLabel value="Data" />
-		<h:inputText id="data" value="#{adminLivroBean.livro.dataLancamento}" pt:type="date">
-			<f:convertDateTime pattern="yyyy-MM-dd"/>
-		</h:inputText>
-		<h:message for="data" />
-	</div>
-	<h:commandButton action="#{adminLivroBean.salvar}" value="cadastrar" />
-</h:form>
+</h:body>
+
 </html>

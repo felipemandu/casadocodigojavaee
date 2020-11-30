@@ -1,18 +1,20 @@
 package br.com.felipemandu.casadocodigojavaee.loja.beans;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Part;
+import javax.transaction.Transactional;
 
 import br.com.felipemandu.casadocodigojavaee.loja.dao.AutorDao;
 import br.com.felipemandu.casadocodigojavaee.loja.dao.LivroDao;
 import br.com.felipemandu.casadocodigojavaee.loja.domain.Autor;
 import br.com.felipemandu.casadocodigojavaee.loja.domain.Livro;
+import br.com.felipemandu.casadocodigojavaee.loja.infra.FileAdmin;
 import br.com.felipemandu.casadocodigojavaee.loja.infra.MessageHelper;
 
 @Named
@@ -20,8 +22,6 @@ import br.com.felipemandu.casadocodigojavaee.loja.infra.MessageHelper;
 public class AdminLivroBean {
 
 	private Livro livro = new Livro();
-
-	private List<Integer> autoresId = new ArrayList<>();
 
 	@Inject
 	private LivroDao livroDao;
@@ -32,14 +32,15 @@ public class AdminLivroBean {
 	@Inject
 	private MessageHelper msgHelper;
 	
-	public String salvar() {
-		cadastreAutoresNoLivro(this.autoresId, this.livro);	
+	private Part capaLivro;
+
+	@Transactional
+	public String salvar() throws IOException {
+		livro.setPath(new FileAdmin().write("livro", capaLivro));
 		livroDao.save(livro);
 		msgHelper.addFlash(null, new FacesMessage("Livro cadastrado com sucesso."));
 		return "/livros/lista?faces-redirect=true";
 	}
-
-
 
 	public Livro getLivro() {
 		return livro;
@@ -53,20 +54,13 @@ public class AdminLivroBean {
 		return this.autorDao.getAll();
 	}
 
-	public List<Integer> getAutoresId() {
-		return autoresId;
-	}
-
-	public void setAutoresId(List<Integer> autoresId) {
-		this.autoresId = autoresId;
+	public Part getCapaLivro() {
+		return capaLivro;
 	}
 	
-	private void cadastreAutoresNoLivro(List<Integer> autoresId, Livro livro) {
-		List<Autor> autores = autoresId.stream()
-				.map(id -> new Autor(id))
-				.collect(Collectors.toList());
-		
-		livro.setAutores(autores);
+	public void setCapaLivro(Part capaLivro) {
+		this.capaLivro = capaLivro;
 	}
+	
 
 }

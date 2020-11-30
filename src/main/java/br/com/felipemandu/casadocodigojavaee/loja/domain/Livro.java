@@ -12,8 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -33,6 +34,9 @@ public class Livro {
 	@NotBlank
 	private String titulo;
 	
+	@NotBlank
+	private String subTitulo;
+	
 	@Lob
 	@Length(min = 100)
 	@NotBlank
@@ -42,18 +46,25 @@ public class Livro {
 	@NotNull
 	private Integer numeroPaginas;
 	
+	@NotBlank
+	private String isbn;
+	
+	
 	@DecimalMin("20")
 	@NotNull
 	private BigDecimal preco;
 	
-	@Future
-	@NotNull
+	@Temporal(TemporalType.DATE)
 	private Calendar dataLancamento;
 
+	@NotNull
+	private String path;
+	
 	@ManyToMany
 	@JoinTable(name = "livro_autor", 
 		joinColumns = @JoinColumn(name = "livros_id", referencedColumnName = "id"), 
 		inverseJoinColumns = @JoinColumn(name = "autores_id", referencedColumnName = "id"))
 	private List<Autor> autores;
+	
 
 }
