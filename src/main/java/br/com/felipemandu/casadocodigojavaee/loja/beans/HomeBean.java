@@ -15,7 +15,6 @@ public class HomeBean {
 	private LivroDao livroDao;
 	
 	public List<Livro> getUltimosLancamentos() {
-		System.out.println("chegou aqui");
 		return  livroDao.ultimosLancamentos();
 	}
 	

@@ -43,12 +43,10 @@ public class CarrinhoCompras implements Serializable{
 				.reduce(BigDecimal.ZERO, (v1, v2) -> v1.add(v2));
 	}
 
-	public void finalizar(Usuario usuario) {
-		Compra compra = new Compra();
-		compra.setUsuario(usuario);
+	public void finalizar(Compra compra) {
 		compra.setItens(toJson(getItens()));
-		compraDao.salvar(compra);
-		
+		compra.setTotal(valorTotal());
+		compraDao.salvar(compra);		
 	}
 	
 	public Integer getQuantidadeTotal() {
