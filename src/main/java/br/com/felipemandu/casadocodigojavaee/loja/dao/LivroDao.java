@@ -36,7 +36,6 @@ public class LivroDao {
 	public Livro getById(Integer id) {
 		String query = "SELECT l FROM Livro l JOIN FETCH l.autores WHERE l.id = :id";
 		return manager.createQuery(query, Livro.class).setParameter("id", id).getSingleResult();
-		
 	}
 
 }
