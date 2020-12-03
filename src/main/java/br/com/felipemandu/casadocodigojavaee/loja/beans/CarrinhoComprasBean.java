@@ -30,8 +30,16 @@ public class CarrinhoComprasBean {
 		return carrinho.getItens();
 	}
 	
+	public void remover(CarrinhoItem item) {
+		carrinho.remove(item);
+	}
+	
 	public BigDecimal getTotal() {
 		return carrinho.valorTotal();
+	}
+	
+	public Integer quantidadeTotal() {
+		return getItens().stream().mapToInt(v -> v.getQuantidade()).sum();
 	}
 
 }
