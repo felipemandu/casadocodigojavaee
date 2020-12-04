@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import org.hibernate.jpa.QueryHints;
+
 import br.com.felipemandu.casadocodigojavaee.loja.domain.Livro;
 
 public class LivroDao {
@@ -25,12 +27,18 @@ public class LivroDao {
 
 	public List<Livro> ultimosLancamentos() {
 		String query = "SELECT l FROM Livro l JOIN FETCH l.autores ORDER BY l.id";
-		return manager.createQuery(query, Livro.class).setFirstResult(5).getResultList();
+		return manager.createQuery(query, Livro.class)
+				.setFirstResult(5)
+				.setHint(QueryHints.HINT_CACHEABLE, true)
+				.getResultList();
 	}
 
 	public List<Livro> listarOutros() {
 		String query = "SELECT l FROM Livro l JOIN FETCH l.autores ORDER BY l.id";
-		return manager.createQuery(query, Livro.class).setMaxResults(5).getResultList();
+		return manager.createQuery(query, Livro.class)
+				.setMaxResults(5)
+				.setHint(QueryHints.HINT_CACHEABLE, true)
+				.getResultList();
 	}
 
 	public Livro getById(Integer id) {
