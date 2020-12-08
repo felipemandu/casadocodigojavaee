@@ -28,6 +28,11 @@ public class CurrentUser {
 	public boolean hasRole(String role) {
 		return request.isUserInRole(role);
 	}
+	
+	public String logout() {
+		request.getSession().invalidate();
+		return "/livros/lista.xhtml?faces-redirect=true";
+	}
 
 	@PostConstruct
 	private void loadSystemUser() {
