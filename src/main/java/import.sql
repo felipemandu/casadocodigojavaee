@@ -42,5 +42,20 @@ values
 		(8,8),
 		(9,9),
 		(10,10);
+		
+insert into 
+	systemuser (login,senha) 
+values 
+	('felipe@mandu.com', 'pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM=');
+	
+insert into
+	systemrole (name)
+values
+	('ADMIN');
+	
+insert into
+	systemuser_systemrole
+values
+	(1, 'ADMIN');
 
  
